@@ -18,6 +18,7 @@ $qery = "SELECT posts.* , categories.name  FROM posts INNER JOIN categories ON c
 $result = $conn->query($qery);
 $posts = $result->fetch_all(MYSQLI_ASSOC);
 // var_dump($posts);
+$conn->close();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,9 +33,14 @@ $posts = $result->fetch_all(MYSQLI_ASSOC);
 <body class="vh-100 d-flex flex-column">
     <?php require_once __DIR__ . '/../partials/post_header.php' ?>
     <main class="flex-grow-1 d-flex overflow-auto h-25">
-        <div class="container py-5">
+        <div class="container">
             <!-- POSTS -->
-            <ul>
+            <?php if (count($posts)) : ?>
+                <p class="fs-5 mb-1 py-2">You have <?php echo count($posts) ?> posts on our blog</p>
+            <?php else : ?>
+                <p class="fs-5 mb-1 py-2">You have not pubblished any post yet</p>
+            <?php endif; ?>
+            <ul class="ps-0">
                 <?php foreach ($posts as $post) : ?>
                     <li class="list-unstyled bg-body-secondary py-2 px-3 border border-white d-flex justify-content-between align-items-center">
                         <span class="fw-bold fs-5"><?php echo $post['title'] ?></span>

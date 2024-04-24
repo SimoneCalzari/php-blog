@@ -55,7 +55,7 @@ if (isset($_POST['user']) && isset($_POST['psw'])) {
         <h1>PHP MY BLOG - LOGIN</h1>
     </header>
     <main class="flex-grow-1 d-flex bg-body-secondary">
-        <form action="login.php" method="POST" class="m-auto border border-2 border-primary p-4 rounded-4 bg-white">
+        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST" class="m-auto border border-2 border-primary p-4 rounded-4 bg-white">
             <div class="mb-3">
                 <label for="user" class="form-label fw-bold">Username</label>
                 <input type="text" class="form-control" id="user" name="user" required value="<?php echo $user ?? '' ?>">
