@@ -46,8 +46,8 @@ if (isset($_POST['submit'])) {
 
 <body class="vh-100 d-flex flex-column">
     <?php require_once __DIR__ . '/../partials/post_header.php' ?>
-    <main class="flex-grow-1 d-flex overflow-auto h-25 bg-body-secondary">
-        <div class="container py-3">
+    <main class="flex-grow-1 overflow-auto h-25 bg-body-secondary">
+        <div class="container py-5">
             <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST" class="bg-white px-5 py-4">
                 <h2>Create new post</h2>
                 <div class="mb-3">
@@ -56,7 +56,8 @@ if (isset($_POST['submit'])) {
                 </div>
                 <div class="mb-3">
                     <label for="content" class="form-label fw-bold">Content</label>
-                    <input type="text" class="form-control" id="content" name="content" required>
+                    <textarea class="form-control" id="content" name="content" rows="8" required>
+                    </textarea>
                 </div>
                 <label for="category" class="mb-2 fw-bold">Choose a category:</label>
                 <select class="form-select mb-4" id="category" name="category_id">

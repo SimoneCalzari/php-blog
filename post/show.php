@@ -36,7 +36,7 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php require_once __DIR__ . '/../partials/boos_font.php' ?>
-    <title>Show</title>
+    <title>Show post</title>
 </head>
 
 <body class="vh-100 d-flex flex-column overflow-hidden">

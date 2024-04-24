@@ -28,7 +28,7 @@ $conn->close();
 
 <body class="vh-100 d-flex flex-column">
     <?php require_once __DIR__ . '/../partials/post_header.php' ?>
-    <main class="flex-grow-1 d-flex overflow-auto h-25">
+    <main class="flex-grow-1 overflow-auto h-25">
         <div class="container">
             <!-- INDICAZIONE NUMERO POST O LORO ASSENZA -->
             <?php if (count($posts)) : ?>
