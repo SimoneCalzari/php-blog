@@ -1,4 +1,10 @@
 <?php
+session_start();
+// se l'utente è già loggato lo rimando alla dashboard di gestione dei post
+if (isset($_SESSION['user'])) {
+    header("Location: ./post/index.php");
+    die();
+}
 // controllo se sono stati inviati user e password
 if (isset($_POST['user']) && isset($_POST['psw'])) {
     $user = htmlspecialchars($_POST['user']);
@@ -25,6 +31,7 @@ if (isset($_POST['user']) && isset($_POST['psw'])) {
         $stmt->close();
         $conn->close();
         if (password_verify($psw, $user_db['password'])) {
+            $_SESSION['user'] = $user_db;
             header("Location: ./post/index.php");
             die();
         }
