@@ -10,11 +10,7 @@ if (isset($_POST['user']) && isset($_POST['psw'])) {
     $user = htmlspecialchars($_POST['user']);
     $psw = htmlspecialchars($_POST['psw']);
     // connessione al db
-    $host = 'localhost';
-    $db_user = 'root';
-    $db_psw = 'root';
-    $db_name = 'php_blog';
-    $conn = new mysqli($host, $db_user, $db_psw, $db_name);
+    require_once __DIR__ . '/utilities/db_conn.php';
 
     // prep and bind per prendere l'eventuale utente
     $stmt = $conn->prepare('SELECT * FROM users WHERE username = ?');

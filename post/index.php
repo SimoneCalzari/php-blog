@@ -8,11 +8,7 @@ if (!isset($_SESSION['user'])) {
 // salvo l user in una variabile
 $user = $_SESSION['user'];
 // connessione al db
-$host = 'localhost';
-$db_user = 'root';
-$db_psw = 'root';
-$db_name = 'php_blog';
-$conn = new mysqli($host, $db_user, $db_psw, $db_name);
+require_once __DIR__ . '/../utilities/db_conn.php';
 // query post
 $qery = "SELECT posts.* , categories.name  FROM posts INNER JOIN categories ON categories.id = posts.category_id WHERE user_id = " . $user['id'];
 $result = $conn->query($qery);

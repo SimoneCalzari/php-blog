@@ -8,11 +8,7 @@ if (!isset($_SESSION['user'])) {
 // salvo l user in una variabile
 $user = $_SESSION['user'];
 // mi connetto al db per prendere le categorie e mostrarle come opzione nel form
-$host = 'localhost';
-$db_user = 'root';
-$db_psw = 'root';
-$db_name = 'php_blog';
-$conn = new mysqli($host, $db_user, $db_psw, $db_name);
+require_once __DIR__ . '/../utilities/db_conn.php';
 $result = $conn->query('SELECT * FROM categories');
 $categories = $result->fetch_all(MYSQLI_ASSOC);
 // entriamo nel caso che il form sia stato inviato
@@ -30,6 +26,9 @@ if (isset($_POST['submit'])) {
     $user_id_q = $user['id'];
     // eseguo lo statement
     $stmt->execute();
+    // chiudo lo statement e la connesione al db
+    $stmt->close();
+    $conn->close();
     // rimando alla pagina admin coi post per veder quello nuovo creato
     header("Location: index.php");
     die();
