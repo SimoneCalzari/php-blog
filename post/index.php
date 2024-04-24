@@ -29,48 +29,61 @@ $conn->close();
 <body class="vh-100 d-flex flex-column">
     <?php require_once __DIR__ . '/../partials/post_header.php' ?>
     <main class="flex-grow-1 overflow-auto h-25">
-        <div class="container">
-            <!-- INDICAZIONE NUMERO POST O LORO ASSENZA -->
-            <?php if (count($posts)) : ?>
-                <p class="fs-5 mb-1 py-2">You have <?php echo count($posts) ?> posts on our blog</p>
-            <?php else : ?>
-                <p class="fs-5 mb-1 py-2">You have not pubblished any post yet</p>
-            <?php endif; ?>
-            <!-- /INDICAZIONE NUMERO POST O LORO ASSENZA -->
-            <!-- POSTS -->
-            <ul class="ps-0">
-                <?php foreach ($posts as $post) : ?>
-                    <li class="list-unstyled bg-body-secondary py-2 px-3 border border-2 border-white d-flex justify-content-between align-items-center">
-                        <!-- TITOLO POST E CATEGORIA -->
-                        <div class="fw-bold fs-5">
-                            <?php echo $post['title'] ?> -
-                            <span class="bg-info fs-6 px-2 fw-lighter rounded">
-                                <?php echo $post['name'] ?>
-                            </span>
-                        </div>
-                        <!-- /TITOLO POST E CATEGORIA -->
-                        <div class="d-flex gap-2">
-                            <!-- CANCELLA POST -->
-                            <form action="delete.php" method="POST">
-                                <button class="btn btn-danger" name="id" value="<?php echo $post['id'] ?>">Delete post <i class="fa-solid fa-trash-can ms-1"></i></button>
-                            </form>
-                            <!-- CANCELLA POST -->
-                            <!-- AGGIORNA POST -->
-                            <form action="edit.php" method="GET">
-                                <button class="btn btn-info" name="id" value="<?php echo $post['id'] ?>">Update post <i class="fa-solid fa-pen-to-square ms-1"></i></button>
-                            </form>
-                            <!-- /AGGIORNA POST -->
-                            <!-- DETTAGLIO POST -->
-                            <form action="show.php" method="GET">
-                                <button class="btn btn-success" name="id" value="<?php echo $post['id'] ?>">Show post <i class="fa-solid fa-circle-info ms-1"></i></button>
-                            </form>
-                            <!-- /DETTAGLIO POST -->
-                        </div>
+        <div class="container-fluid row">
+            <div class="col-2"></div>
+            <div class="col-8">
+                <!-- INDICAZIONE NUMERO POST O LORO ASSENZA -->
+                <?php if (count($posts)) : ?>
+                    <p class="fs-5 mb-1 py-2">You have <?php echo count($posts) ?> posts on our blog</p>
+                <?php else : ?>
+                    <p class="fs-5 mb-1 py-2">You have not published any post yet</p>
+                <?php endif; ?>
+                <!-- /INDICAZIONE NUMERO POST O LORO ASSENZA -->
+                <!-- POSTS -->
+                <ul class="ps-0">
+                    <?php foreach ($posts as $post) : ?>
+                        <li class="list-unstyled bg-body-secondary py-2 px-3 border border-2 border-white d-flex justify-content-between align-items-center">
+                            <!-- TITOLO POST E CATEGORIA -->
+                            <div class="fw-bold fs-5">
+                                <?php echo $post['title'] ?> -
+                                <span class="bg-info fs-6 px-2 fw-lighter rounded">
+                                    <?php echo $post['name'] ?>
+                                </span>
+                            </div>
+                            <!-- /TITOLO POST E CATEGORIA -->
+                            <div class="d-flex gap-2">
+                                <!-- CANCELLA POST -->
+                                <form action="delete.php" method="POST">
+                                    <button class="btn btn-danger" name="id" value="<?php echo $post['id'] ?>">Delete post <i class="fa-solid fa-trash-can ms-1"></i></button>
+                                </form>
+                                <!-- CANCELLA POST -->
+                                <!-- AGGIORNA POST -->
+                                <form action="edit.php" method="GET">
+                                    <button class="btn btn-info" name="id" value="<?php echo $post['id'] ?>">Update post <i class="fa-solid fa-pen-to-square ms-1"></i></button>
+                                </form>
+                                <!-- /AGGIORNA POST -->
+                                <!-- DETTAGLIO POST -->
+                                <form action="show.php" method="GET">
+                                    <button class="btn btn-success" name="id" value="<?php echo $post['id'] ?>">Show post <i class="fa-solid fa-circle-info ms-1"></i></button>
+                                </form>
+                                <!-- /DETTAGLIO POST -->
+                            </div>
 
-                    </li>
-                <?php endforeach; ?>
-            </ul>
-            <!-- /POSTS -->
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+                <!-- /POSTS -->
+
+            </div>
+            <div class="col-2">
+                <p class="fs-5 mb-1 py-2">Add a new category: </p>
+                <form action="../category/store.php" method="POST">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" name="name">
+                        <button class="input-group-text btn btn-success">Create</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </main>
 </body>
