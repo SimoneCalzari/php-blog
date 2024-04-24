@@ -56,8 +56,7 @@ if (isset($_POST['submit'])) {
                 </div>
                 <div class="mb-3">
                     <label for="content" class="form-label fw-bold">Content</label>
-                    <textarea class="form-control" id="content" name="content" rows="8" required>
-                    </textarea>
+                    <textarea class="form-control" id="content" name="content" rows="8" required></textarea>
                 </div>
                 <label for="category" class="mb-2 fw-bold">Choose a category:</label>
                 <select class="form-select mb-4" id="category" name="category_id">

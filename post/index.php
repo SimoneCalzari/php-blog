@@ -10,7 +10,7 @@ $user = $_SESSION['user'];
 // connessione al db
 require_once __DIR__ . '/../utilities/db_conn.php';
 // query post
-$qery = "SELECT posts.* , categories.name  FROM posts INNER JOIN categories ON categories.id = posts.category_id WHERE user_id = " . $user['id'];
+$qery = "SELECT posts.* , categories.name  FROM posts INNER JOIN categories ON categories.id = posts.category_id WHERE user_id = " . $user['id'] . ' ORDER BY posts.updated_at DESC';
 $result = $conn->query($qery);
 $posts = $result->fetch_all(MYSQLI_ASSOC);
 // var_dump($posts);
