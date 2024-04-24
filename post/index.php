@@ -52,17 +52,17 @@ $conn->close();
                         <div class="d-flex gap-2">
                             <!-- CANCELLA POST -->
                             <form action="delete.php" method="POST">
-                                <button class="btn btn-danger" name="id" value="<?php echo $post['id'] ?>">Delete post</button>
+                                <button class="btn btn-danger" name="id" value="<?php echo $post['id'] ?>">Delete post <i class="fa-solid fa-trash-can ms-1"></i></button>
                             </form>
                             <!-- CANCELLA POST -->
                             <!-- AGGIORNA POST -->
                             <form action="edit.php" method="GET">
-                                <button class="btn btn-info" name="id" value="<?php echo $post['id'] ?>">Update post</button>
+                                <button class="btn btn-info" name="id" value="<?php echo $post['id'] ?>">Update post <i class="fa-solid fa-pen-to-square ms-1"></i></button>
                             </form>
                             <!-- /AGGIORNA POST -->
                             <!-- DETTAGLIO POST -->
                             <form action="show.php" method="GET">
-                                <button class="btn btn-success" name="id" value="<?php echo $post['id'] ?>">Show post</button>
+                                <button class="btn btn-success" name="id" value="<?php echo $post['id'] ?>">Show post <i class="fa-solid fa-circle-info ms-1"></i></button>
                             </form>
                             <!-- /DETTAGLIO POST -->
                         </div>
