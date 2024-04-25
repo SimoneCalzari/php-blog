@@ -90,14 +90,14 @@ if (in_array($curr_category, $cat_ids)) {
                                 </form>
                                 <!-- CANCELLA POST -->
                                 <!-- AGGIORNA POST -->
-                                <form action="edit.php" method="GET">
-                                    <button class="btn btn-info" name="id" value="<?php echo $post['id'] ?>">Update post <i class="fa-solid fa-pen-to-square ms-1"></i></button>
-                                </form>
+                                <a href="edit.php?id=<?php echo $post['id'] ?>" class="btn btn-info">
+                                    Update post <i class="fa-solid fa-pen-to-square ms-1"></i>
+                                </a>
                                 <!-- /AGGIORNA POST -->
                                 <!-- DETTAGLIO POST -->
-                                <form action="show.php" method="GET">
-                                    <button class="btn btn-success" name="id" value="<?php echo $post['id'] ?>">Show post <i class="fa-solid fa-circle-info ms-1"></i></button>
-                                </form>
+                                <a href="show.php?id=<?php echo $post['id'] ?>" class="btn btn-success">
+                                    Show post <i class="fa-solid fa-circle-info ms-1"></i>
+                                </a>
                                 <!-- /DETTAGLIO POST -->
                             </div>
 
