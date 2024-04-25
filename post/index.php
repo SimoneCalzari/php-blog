@@ -44,7 +44,7 @@ if (in_array($curr_category, $cat_ids)) {
 <body class="vh-100 d-flex flex-column">
     <?php require_once __DIR__ . '/../partials/post_header.php' ?>
     <main class="flex-grow-1 overflow-auto h-25">
-        <div class="container-fluid row">
+        <div class="container-fluid row py-2">
             <div class="col-2">
                 <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="GET">
                     <label for="category" class="fs-5 mb-1 py-2">Filter by category:</label>
@@ -56,7 +56,7 @@ if (in_array($curr_category, $cat_ids)) {
                             </option>
                         <?php endforeach; ?>
                     </select>
-                    <button class="btn btn-success">Search</button>
+                    <button class="btn btn-info">Search <i class="fa-solid fa-magnifying-glass"></i></button>
                 </form>
             </div>
             <div class="col-8">
