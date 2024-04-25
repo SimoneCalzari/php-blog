@@ -5,7 +5,7 @@ if (!isset($_SESSION['user'])) {
     header("Location: ../login.php");
     die();
 }
-// salvo l user in una variabile
+// salvo l user  in una variabile
 $user = $_SESSION['user'];
 // connessione al db
 require_once __DIR__ . '/../utilities/db_conn.php';
@@ -21,6 +21,18 @@ $qery = "SELECT posts.* , categories.name  FROM posts INNER JOIN categories ON c
 $result = $conn->query($qery);
 $posts = $result->fetch_all(MYSQLI_ASSOC);
 $conn->close();
+// controllo se i post sono aumentati, diminuti o rimasti uguali
+// nei primi due casi mostro un messaggio di avvenuta creazione o cancellazione
+$post_created = false;
+$post_deleted = false;
+if (count($posts) > $_SESSION['posts_num']) {
+    $_SESSION['posts_num']++;
+    $post_created = true;
+}
+if (count($posts) < $_SESSION['posts_num']) {
+    $_SESSION['posts_num']--;
+    $post_deleted = true;
+}
 // salvo in una variabile la categoria corrente se passata, altrimenti sarà vuota e corrisponderà al caso tutte categorie
 $curr_category = htmlspecialchars($_GET['category_id'] ?? '');
 // controllo se l id passato esiste tra quelli delle categorie, altrimenti restituirò tutti i post
@@ -71,6 +83,18 @@ if (in_array($curr_category, $cat_ids)) {
                     <p class="fs-5 mb-1 py-2">You have not published yet on our blog</p>
                 <?php endif; ?>
                 <!-- /INDICAZIONE NUMERO POST O LORO ASSENZA -->
+                <!-- MESSAGGI CREAZIONE E CANCELLAZIONE POST -->
+                <?php if ($post_created) : ?>
+                    <div class="alert alert-success" role="alert">
+                        Your post has been successfully created!
+                    </div>
+                <?php endif;  ?>
+                <?php if ($post_deleted) : ?>
+                    <div class="alert alert-danger" role="alert">
+                        Your post has been successfully deleted!
+                    </div>
+                <?php endif;  ?>
+                <!-- /MESSAGGI CREAZIONE E CANCELLAZIONE POST -->
                 <!-- POSTS -->
                 <ul class="ps-0">
                     <?php foreach ($posts as $index => $post) : ?>

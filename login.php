@@ -25,9 +25,12 @@ if (isset($_POST['user']) && isset($_POST['psw'])) {
         // salvo la row dell'utente come un array associativo
         $user_db = $result->fetch_assoc();
         $stmt->close();
-        $conn->close();
+
         if (password_verify($psw, $user_db['password'])) {
             $_SESSION['user'] = $user_db;
+            $result = $conn->query('SELECT * FROM posts WHERE user_id = ' . $user_db['id']);
+            $_SESSION['posts_num'] = $result->num_rows;
+            $conn->close();
             header("Location: ./post/index.php");
             die();
         }
