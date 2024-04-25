@@ -27,7 +27,9 @@ if (isset($_POST['user']) && isset($_POST['psw'])) {
         $stmt->close();
 
         if (password_verify($psw, $user_db['password'])) {
+            // salvo l utente in sessione
             $_SESSION['user'] = $user_db;
+            // salvo il suo numero di post per avere un riferimento nel caso ne aggiunga o tolta altri
             $result = $conn->query('SELECT * FROM posts WHERE user_id = ' . $user_db['id']);
             $_SESSION['posts_num'] = $result->num_rows;
             $conn->close();

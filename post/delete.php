@@ -24,6 +24,11 @@ if ($result->num_rows === 0) {
     header("Location: index.php");
     die();
 }
+// prendo il post per verificare se ha l immagine e nel caso cancellarla
+$post = $result->fetch_assoc();
+if ($post['image']) {
+    unlink('../uploads/' . $post['image']);
+}
 // il post esiste ed è dell utente loggato allora procedo alla cancellazione
 $conn->query("DELETE FROM posts WHERE id = $post_id");
 // chiudo la connesione al db e rimando alla pagina coi post
