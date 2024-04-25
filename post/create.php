@@ -92,10 +92,10 @@ if (isset($_POST['submit'])) {
                 <button class="btn btn-success" name="submit" value="1">Create post</button>
             </form>
         </div>
-        <!-- JS PREVIEW IMMAGINE CARICARE -->
-        <script src="../js/previews.js"></script>
-        <!-- /JS PREVIEW IMMAGINE CARICARE -->
     </main>
+    <!-- JS PREVIEW IMMAGINE CARICARE -->
+    <script src="../js/previews.js"></script>
+    <!-- /JS PREVIEW IMMAGINE CARICARE -->
 </body>
 
 </html>

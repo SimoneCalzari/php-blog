@@ -37,13 +37,29 @@ if (isset($_POST['submit'])) {
     $title = htmlspecialchars($_POST['title']);
     $content = htmlspecialchars($_POST['content']);
     $category_id = htmlspecialchars($_POST['category_id']);
+    $img = $_FILES['image'] ?? null;
     // prepare and bind statement
-    $stmt = $conn->prepare('UPDATE posts SET title = ?, content = ?,  category_id = ? WHERE id = ?');
-    $stmt->bind_param('ssii', $title_q, $content_q, $category_id_q, $post_id_q);
+    //  se passo un file ed è un immagine
+    if ($img && str_contains($img['type'], 'image/')) {
+        // se ho già un immagine cancello quella precedente
+        if ($post['image']) {
+            unlink('../uploads/' . $post['image']);
+        }
+        // carico immagine nei miei uploads
+        move_uploaded_file($img['tmp_name'], '../uploads/' . $img['name']);
+        $stmt = $conn->prepare('UPDATE posts SET title = ?, content = ?,  category_id = ?, image = ? WHERE id = ?');
+        $stmt->bind_param('ssisi', $title_q, $content_q, $category_id_q, $img_q, $post_id_q);
+    }
+    // se non passo nessun file mantengo quello che c era prima, che fosse null o un immagine
+    else {
+        $stmt = $conn->prepare('UPDATE posts SET title = ?, content = ?,  category_id = ? WHERE id = ?');
+        $stmt->bind_param('ssii', $title_q, $content_q, $category_id_q, $post_id_q);
+    }
     $title_q = $title;
     $content_q = $content;
     $category_id_q = $category_id;
     $post_id_q = $post_id;
+    $img_q = $img['name'];
     // eseguo lo statement
     $stmt->execute();
     // chiudo lo statement e la connesione al db
@@ -68,7 +84,7 @@ if (isset($_POST['submit'])) {
     <?php require_once __DIR__ . '/../partials/post_header.php' ?>
     <main class="flex-grow-1 overflow-auto h-25 bg-body-secondary">
         <div class="container py-5">
-            <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST" class="bg-white px-5 py-4">
+            <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST" class="bg-white px-5 py-4" enctype="multipart/form-data">
                 <h2>Edit your post</h2>
                 <div class="mb-3">
                     <label for="title" class="form-label fw-bold">Title</label>
@@ -80,17 +96,31 @@ if (isset($_POST['submit'])) {
                     </textarea>
                 </div>
                 <label for="category" class="mb-2 fw-bold">Choose a category:</label>
-                <select class="form-select mb-4" id="category" name="category_id">
+                <select class="form-select mb-3" id="category" name="category_id">
                     <?php foreach ($categories as $category) : ?>
                         <option value="<?php echo $category['id'] ?>" <?php if ($category_id ?? $post['category_id'] === $category['id']) : ?> selected <?php endif; ?>>
                             <?php echo $category['name'] ?>
                         </option>
                     <?php endforeach; ?>
                 </select>
+                <div class="mb-3">
+                    <label for="image" class="form-label fw-bold">Update image:</label>
+                    <input class="form-control" type="file" id="image" name="image">
+                </div>
+                <h6 class="fw-bold">New image preview:</h6>
+                <div class="border border-2 rounded-2 mb-4 overflow-hidden" style="width: 15%; aspect-ratio: 1/1;" id="img-preview">
+                    <div class="h-100 d-flex justify-content-center align-items-center" id="icon-preview">
+                        <i class="fa-solid fa-image fs-1"></i>
+                    </div>
+                    <img src="" alt="" id="preview" class="w-100 object-fit-cover h-100 d-none">
+                </div>
                 <button class="btn btn-success" name="submit" value="<?php echo $post['id'] ?>">Edit post</button>
             </form>
         </div>
     </main>
+    <!-- JS PREVIEW IMMAGINE CARICARE -->
+    <script src="../js/previews.js"></script>
+    <!-- /JS PREVIEW IMMAGINE CARICARE -->
 </body>
 
 </html>
