@@ -78,13 +78,23 @@ if (isset($_POST['submit'])) {
                         </option>
                     <?php endforeach; ?>
                 </select>
-                <div class="mb-4">
+                <div class="mb-3">
                     <label for="image" class="form-label fw-bold">Add an image:</label>
                     <input class="form-control" type="file" id="image" name="image">
+                </div>
+                <h6 class="fw-bold">Image preview:</h6>
+                <div class="border border-2 rounded-2 mb-4 overflow-hidden" style="width: 15%; aspect-ratio: 1/1;" id="img-preview">
+                    <div class="h-100 d-flex justify-content-center align-items-center" id="icon-preview">
+                        <i class="fa-solid fa-image fs-1"></i>
+                    </div>
+                    <img src="" alt="" id="preview" class="w-100 object-fit-cover h-100 d-none">
                 </div>
                 <button class="btn btn-success" name="submit" value="1">Create post</button>
             </form>
         </div>
+        <!-- JS PREVIEW IMMAGINE CARICARE -->
+        <script src="../js/previews.js"></script>
+        <!-- /JS PREVIEW IMMAGINE CARICARE -->
     </main>
 </body>
 
