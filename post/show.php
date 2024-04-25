@@ -43,12 +43,17 @@ $conn->close();
     <?php require_once __DIR__ . '/../partials/post_header.php' ?>
     <main class="flex-grow-1 overflow-auto">
         <div class="w-50 mx-auto bg-body-secondary my-4 px-4 pb-4 rounded-5">
-            <h2 class="text-center py-3">
-                <?php echo $post['title'] ?>
-                <span class="bg-info fs-6 px-2 rounded">
-                    <?php echo $post['name'] ?>
-                </span>
-            </h2>
+            <header class="d-flex justify-content-between align-items-center">
+                <h2 class="text-center py-3">
+                    <?php echo $post['title'] ?>
+                    <span class="bg-info fs-6 px-2 rounded">
+                        <?php echo $post['name'] ?>
+                    </span>
+                </h2>
+                <a href="edit.php?id=<?php echo $post['id'] ?>" class="btn btn-info">
+                    Update<i class="fa-solid fa-pen-to-square ms-1"></i>
+                </a>
+            </header>
             <?php if ($post['image']) : ?>
                 <img src="../uploads/<?php echo $post['image'] ?>" alt="<?php echo $post['title'] ?>" class="w-50 mx-auto d-block mb-2">
             <?php endif; ?>

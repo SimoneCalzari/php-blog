@@ -85,7 +85,12 @@ if (isset($_POST['submit'])) {
     <main class="flex-grow-1 overflow-auto h-25 bg-body-secondary">
         <div class="container py-5">
             <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST" class="bg-white px-5 py-4" enctype="multipart/form-data">
-                <h2>Edit your post</h2>
+                <header class="d-flex justify-content-between align-items-center">
+                    <h2>Edit your post</h2>
+                    <a href="show.php?id=<?php echo $post['id'] ?>" class="btn btn-success">
+                        Post details <i class="fa-solid fa-circle-info ms-1"></i>
+                    </a>
+                </header>
                 <div class="mb-3">
                     <label for="title" class="form-label fw-bold">Title</label>
                     <input type="text" class="form-control" id="title" name="title" required value="<?php echo $title ?? $post['title'] ?>">
@@ -104,15 +109,29 @@ if (isset($_POST['submit'])) {
                     <?php endforeach; ?>
                 </select>
                 <div class="mb-3">
-                    <label for="image" class="form-label fw-bold">Update image:</label>
+                    <label for="image" class="form-label fw-bold">Update image (don't fill this field if you like your current image):</label>
                     <input class="form-control" type="file" id="image" name="image">
                 </div>
-                <h6 class="fw-bold">New image preview:</h6>
-                <div class="border border-2 rounded-2 mb-4 overflow-hidden" style="width: 15%; aspect-ratio: 1/1;" id="img-preview">
-                    <div class="h-100 d-flex justify-content-center align-items-center" id="icon-preview">
-                        <i class="fa-solid fa-image fs-1"></i>
+                <div class="d-flex gap-4">
+                    <div style="width: 15%;">
+                        <h6 class="fw-bold">New image preview:</h6>
+                        <div class="border border-2 rounded-2 mb-4 overflow-hidden" style="aspect-ratio: 1/1;" id="img-preview">
+                            <div class="h-100 d-flex justify-content-center align-items-center" id="icon-preview">
+                                <i class="fa-solid fa-image fs-1"></i>
+                            </div>
+                            <img src="" alt="" id="preview" class="w-100 object-fit-cover h-100 d-none">
+                        </div>
                     </div>
-                    <img src="" alt="" id="preview" class="w-100 object-fit-cover h-100 d-none">
+                    <div style="width: 15%;">
+                        <h6 class="fw-bold">Current image preview:</h6>
+                        <?php if ($post['image']) : ?>
+                            <div class="border border-2 rounded-2 mb-4 overflow-hidden" style="aspect-ratio: 1/1;">
+                                <img src="../uploads/<?php echo $post['image'] ?>" alt="" class="w-100 object-fit-cover h-100">
+                            </div>
+                        <?php else : ?>
+                            <p>Your post has no image at the moment</p>
+                        <?php endif; ?>
+                    </div>
                 </div>
                 <button class="btn btn-success" name="submit" value="<?php echo $post['id'] ?>">Edit post</button>
             </form>
