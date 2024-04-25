@@ -63,14 +63,19 @@ if (isset($_POST['submit'])) {
         <div class="container py-5">
             <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST" class="bg-white px-5 py-4" enctype="multipart/form-data">
                 <h2>Create new post</h2>
+                <!-- TITOLO -->
                 <div class="mb-3">
                     <label for="title" class="form-label fw-bold">Title</label>
                     <input type="text" class="form-control" id="title" name="title" required>
                 </div>
+                <!-- /TITOLO -->
+                <!-- CONTENUTO -->
                 <div class="mb-3">
                     <label for="content" class="form-label fw-bold">Content</label>
                     <textarea class="form-control" id="content" name="content" rows="8" required></textarea>
                 </div>
+                <!-- /CONTENUTO -->
+                <!-- CATEGORY -->
                 <label for="category" class="mb-2 fw-bold">Choose a category:</label>
                 <select class="form-select mb-3" id="category" name="category_id">
                     <?php foreach ($categories as $category) : ?>
@@ -79,10 +84,17 @@ if (isset($_POST['submit'])) {
                         </option>
                     <?php endforeach; ?>
                 </select>
+                <!-- /CATEGORY -->
+                <!-- UPLOAD IMMAGINE -->
                 <div class="mb-3">
                     <label for="image" class="form-label fw-bold">Add an image:</label>
-                    <input class="form-control" type="file" id="image" name="image">
+                    <div class="d-flex">
+                        <input class="form-control rounded-end-0" type="file" id="image" name="image">
+                        <div class="border border-start-0 rounded-end-2 d-flex justify-content-center align-items-center px-3 bg-body-secondary" role="button" id="empty-input"><i class="fa-solid fa-xmark fs-4"></i></div>
+                    </div>
                 </div>
+                <!-- /UPLOAD IMMAGINE -->
+                <!-- PREVIEW IMMAGINE -->
                 <h6 class="fw-bold">Image preview:</h6>
                 <div class="border border-2 rounded-2 mb-4 overflow-hidden" style="width: 15%; aspect-ratio: 1/1;" id="img-preview">
                     <div class="h-100 d-flex justify-content-center align-items-center" id="icon-preview">
@@ -90,7 +102,10 @@ if (isset($_POST['submit'])) {
                     </div>
                     <img src="" alt="" id="preview" class="w-100 object-fit-cover h-100 d-none">
                 </div>
+                <!-- /PREVIEW IMMAGINE -->
+                <!-- BUTTON INVIO -->
                 <button class="btn btn-success" name="submit" value="1">Create post</button>
+                <!-- /BUTTON INVIO -->
             </form>
         </div>
     </main>

@@ -92,15 +92,20 @@ if (isset($_POST['submit'])) {
                         Post details <i class="fa-solid fa-circle-info ms-1"></i>
                     </a>
                 </header>
+                <!-- TITOLO -->
                 <div class="mb-3">
                     <label for="title" class="form-label fw-bold">Title</label>
                     <input type="text" class="form-control" id="title" name="title" required value="<?php echo $title ?? $post['title'] ?>">
                 </div>
+                <!-- /TITOLO -->
+                <!-- CONTENUTO -->
                 <div class="mb-3">
                     <label for="content" class="form-label fw-bold">Content</label>
                     <textarea class="form-control" id="content" name="content" rows="6" required><?php echo $content ?? $post['content'] ?>
                     </textarea>
                 </div>
+                <!-- /CONTENUTO -->
+                <!-- CATEGORY -->
                 <label for="category" class="mb-2 fw-bold">Choose a category:</label>
                 <select class="form-select mb-3" id="category" name="category_id">
                     <?php foreach ($categories as $category) : ?>
@@ -109,10 +114,17 @@ if (isset($_POST['submit'])) {
                         </option>
                     <?php endforeach; ?>
                 </select>
+                <!-- /CATEGORY -->
+                <!-- UPLOAD IMMAGINE -->
                 <div class="mb-3">
                     <label for="image" class="form-label fw-bold">Update image (don't fill this field if you like your current image):</label>
-                    <input class="form-control" type="file" id="image" name="image">
+                    <div class="d-flex">
+                        <input class="form-control rounded-end-0" type="file" id="image" name="image">
+                        <div class="border border-start-0 rounded-end-2 d-flex justify-content-center align-items-center px-3 bg-body-secondary" role="button" id="empty-input"><i class="fa-solid fa-xmark fs-4"></i></div>
+                    </div>
                 </div>
+                <!-- /UPLOAD IMMAGINE -->
+                <!-- PREVIEW IMMAGINE NUOVA E VECCHIA -->
                 <div class="d-flex gap-4">
                     <div style="width: 15%;">
                         <h6 class="fw-bold">New image preview:</h6>
@@ -134,7 +146,10 @@ if (isset($_POST['submit'])) {
                         <?php endif; ?>
                     </div>
                 </div>
+                <!-- PREVIEW IMMAGINE NUOVA E VECCHIA -->
+                <!-- BUTTON INVIO -->
                 <button class="btn btn-success" name="submit" value="<?php echo $post['id'] ?>">Edit post</button>
+                <!-- /BUTTON INVIO -->
             </form>
         </div>
     </main>
