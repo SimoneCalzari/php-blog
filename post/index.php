@@ -9,12 +9,27 @@ if (!isset($_SESSION['user'])) {
 $user = $_SESSION['user'];
 // connessione al db
 require_once __DIR__ . '/../utilities/db_conn.php';
+// query categorie
+$result = $conn->query('SELECT * FROM categories');
+$categories = $result->fetch_all(MYSQLI_ASSOC);
+// creo un array con solo gli id delle categorie
+$cat_ids = array_map(function ($cat) {
+    return $cat['id'];
+}, $categories);
 // query post
 $qery = "SELECT posts.* , categories.name  FROM posts INNER JOIN categories ON categories.id = posts.category_id WHERE user_id = " . $user['id'] . ' ORDER BY posts.updated_at DESC';
 $result = $conn->query($qery);
 $posts = $result->fetch_all(MYSQLI_ASSOC);
-// var_dump($posts);
 $conn->close();
+// salvo in una variabile la categoria corrente se passata, altrimenti sarà vuota e corrisponderà al caso tutte categorie
+$curr_category = htmlspecialchars($_GET['category_id'] ?? '');
+// controllo se l id passato esiste tra quelli delle categorie, altrimenti restituirò tutti i post
+if (in_array($curr_category, $cat_ids)) {
+    // filtro per categoria
+    $posts = array_filter($posts, function ($post) {
+        return $post['category_id'] === $GLOBALS['curr_category'];
+    });
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -30,13 +45,30 @@ $conn->close();
     <?php require_once __DIR__ . '/../partials/post_header.php' ?>
     <main class="flex-grow-1 overflow-auto h-25">
         <div class="container-fluid row">
-            <div class="col-2"></div>
+            <div class="col-2">
+                <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="GET">
+                    <label for="category" class="fs-5 mb-1 py-2">Filter by category:</label>
+                    <select class="form-select mb-3" id="category" name="category_id">
+                        <option value="" <?php if ($curr_category === '') : ?> selected <?php endif; ?>>All</option>
+                        <?php foreach ($categories as $category) : ?>
+                            <option value="<?php echo $category['id'] ?>" <?php if ($curr_category === $category['id']) : ?> selected <?php endif; ?>>
+                                <?php echo $category['name'] ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                    <button class="btn btn-success">Search</button>
+                </form>
+            </div>
             <div class="col-8">
                 <!-- INDICAZIONE NUMERO POST O LORO ASSENZA -->
                 <?php if (count($posts)) : ?>
-                    <p class="fs-5 mb-1 py-2">You have <?php echo count($posts) ?> posts on our blog</p>
+                    <p class="fs-5 mb-1 py-2">You have <?php echo count($posts) ?> posts on our blog
+                        <?php echo in_array($curr_category, $cat_ids) ? "under the selected category" : '' ?>
+                    </p>
+                <?php elseif ($curr_category) : ?>
+                    <p class="fs-5 mb-1 py-2">Your search under the selected category has produced no results</p>
                 <?php else : ?>
-                    <p class="fs-5 mb-1 py-2">You have not published any post yet</p>
+                    <p class="fs-5 mb-1 py-2">You have not published yet on our blog</p>
                 <?php endif; ?>
                 <!-- /INDICAZIONE NUMERO POST O LORO ASSENZA -->
                 <!-- POSTS -->
