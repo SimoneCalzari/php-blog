@@ -17,13 +17,25 @@ if (isset($_POST['submit'])) {
     $title = htmlspecialchars($_POST['title']);
     $content = htmlspecialchars($_POST['content']);
     $category_id = htmlspecialchars($_POST['category_id']);
+    $img = $_FILES['image'] ?? null;
     // prepare and bind statement
-    $stmt = $conn->prepare('INSERT INTO posts  (title, content, user_id, category_id) VALUES (?, ?, ?,?)');
-    $stmt->bind_param('ssii', $title_q, $content_q, $user_id_q, $category_id_q);
+    // se passo un file ed è un immagine
+    if ($img && str_contains($img['type'], 'image/')) {
+        // carico immagine nei miei uploads
+        move_uploaded_file($img['tmp_name'], '../uploads/' . $img['name']);
+        $stmt = $conn->prepare('INSERT INTO posts  (title, content, user_id, category_id, image) VALUES (?, ?, ?, ?, ?)');
+        $stmt->bind_param('ssiis', $title_q, $content_q, $user_id_q, $category_id_q, $image_name);
+    }
+    // se non passo nessun file
+    else {
+        $stmt = $conn->prepare('INSERT INTO posts  (title, content, user_id, category_id) VALUES (?, ?, ?, ?)');
+        $stmt->bind_param('ssii', $title_q, $content_q, $user_id_q, $category_id_q);
+    }
     $title_q = $title;
     $content_q = $content;
     $category_id_q = $category_id;
     $user_id_q = $user['id'];
+    $image_name = $img['name'];
     // eseguo lo statement
     $stmt->execute();
     // chiudo lo statement e la connesione al db
@@ -48,7 +60,7 @@ if (isset($_POST['submit'])) {
     <?php require_once __DIR__ . '/../partials/post_header.php' ?>
     <main class="flex-grow-1 overflow-auto h-25 bg-body-secondary">
         <div class="container py-5">
-            <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST" class="bg-white px-5 py-4">
+            <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST" class="bg-white px-5 py-4" enctype="multipart/form-data">
                 <h2>Create new post</h2>
                 <div class="mb-3">
                     <label for="title" class="form-label fw-bold">Title</label>
@@ -59,13 +71,17 @@ if (isset($_POST['submit'])) {
                     <textarea class="form-control" id="content" name="content" rows="8" required></textarea>
                 </div>
                 <label for="category" class="mb-2 fw-bold">Choose a category:</label>
-                <select class="form-select mb-4" id="category" name="category_id">
+                <select class="form-select mb-3" id="category" name="category_id">
                     <?php foreach ($categories as $category) : ?>
                         <option value="<?php echo $category['id'] ?>">
                             <?php echo $category['name'] ?>
                         </option>
                     <?php endforeach; ?>
                 </select>
+                <div class="mb-4">
+                    <label for="image" class="form-label fw-bold">Add an image:</label>
+                    <input class="form-control" type="file" id="image" name="image">
+                </div>
                 <button class="btn btn-success" name="submit" value="1">Create post</button>
             </form>
         </div>

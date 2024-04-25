@@ -49,6 +49,9 @@ $conn->close();
                     <?php echo $post['name'] ?>
                 </span>
             </h2>
+            <?php if ($post['image']) : ?>
+                <img src="../uploads/<?php echo $post['image'] ?>" alt="<?php echo $post['title'] ?>" class="w-50 mx-auto d-block mb-2">
+            <?php endif; ?>
             <h5>Content</h5>
             <p><?php echo $post['content'] ?></p>
             <div class="row">
