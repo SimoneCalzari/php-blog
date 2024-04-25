@@ -73,7 +73,7 @@ if (in_array($curr_category, $cat_ids)) {
                 <!-- /INDICAZIONE NUMERO POST O LORO ASSENZA -->
                 <!-- POSTS -->
                 <ul class="ps-0">
-                    <?php foreach ($posts as $post) : ?>
+                    <?php foreach ($posts as $index => $post) : ?>
                         <li class="list-unstyled bg-body-secondary py-2 px-3 border border-2 border-white d-flex justify-content-between align-items-center">
                             <!-- TITOLO POST E CATEGORIA -->
                             <div class="fw-bold fs-5">
@@ -86,7 +86,30 @@ if (in_array($curr_category, $cat_ids)) {
                             <div class="d-flex gap-2">
                                 <!-- CANCELLA POST -->
                                 <form action="delete.php" method="POST">
-                                    <button class="btn btn-danger" name="id" value="<?php echo $post['id'] ?>">Delete post <i class="fa-solid fa-trash-can ms-1"></i></button>
+                                    <!-- BUTTON CHE APRE LA MODALE -->
+                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalDelete<?php echo $index ?>">
+                                        Delete post <i class="fa-solid fa-trash-can ms-1"></i>
+                                    </button>
+                                    <!-- /BUTTON CHE APRE LA MODALE -->
+                                    <!-- MODALE -->
+                                    <div class="modal fade" id="modalDelete<?php echo $index ?>">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5">Confirmation deleting post</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>Are you sure you want to delete <span class="fw-bold"><?php echo $post['title'] ?></span>?</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button class="btn btn-danger" name="id" value="<?php echo $post['id'] ?>">Yes</button>
+                                                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">No</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- /MODALE -->
                                 </form>
                                 <!-- CANCELLA POST -->
                                 <!-- AGGIORNA POST -->
@@ -105,7 +128,6 @@ if (in_array($curr_category, $cat_ids)) {
                     <?php endforeach; ?>
                 </ul>
                 <!-- /POSTS -->
-
             </div>
             <div class="col-2">
                 <p class="fs-5 mb-1 py-2">Add a new category: </p>
@@ -118,6 +140,9 @@ if (in_array($curr_category, $cat_ids)) {
             </div>
         </div>
     </main>
+    <!-- JS BOOTSTRAP -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- /JS BOOTSTRAP -->
 </body>
 
 </html>
