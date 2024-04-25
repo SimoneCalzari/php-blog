@@ -22,7 +22,8 @@ if (isset($_POST['submit'])) {
     // se passo un file ed è un immagine
     if ($img && str_contains($img['type'], 'image/')) {
         // carico immagine nei miei uploads
-        move_uploaded_file($img['tmp_name'], '../uploads/' . $img['name']);
+        $img_name_db = rand(1, 100000) . $img['name'];
+        move_uploaded_file($img['tmp_name'], '../uploads/' . $img_name_db);
         $stmt = $conn->prepare('INSERT INTO posts  (title, content, user_id, category_id, image) VALUES (?, ?, ?, ?, ?)');
         $stmt->bind_param('ssiis', $title_q, $content_q, $user_id_q, $category_id_q, $image_name);
     }
@@ -35,7 +36,7 @@ if (isset($_POST['submit'])) {
     $content_q = $content;
     $category_id_q = $category_id;
     $user_id_q = $user['id'];
-    $image_name = $img['name'];
+    $image_name = $img_name_db;
     // eseguo lo statement
     $stmt->execute();
     // chiudo lo statement e la connesione al db

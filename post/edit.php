@@ -46,7 +46,8 @@ if (isset($_POST['submit'])) {
             unlink('../uploads/' . $post['image']);
         }
         // carico immagine nei miei uploads
-        move_uploaded_file($img['tmp_name'], '../uploads/' . $img['name']);
+        $img_name_db = rand(1, 100000) . $img['name'];
+        move_uploaded_file($img['tmp_name'], '../uploads/' . $img_name_db);
         $stmt = $conn->prepare('UPDATE posts SET title = ?, content = ?,  category_id = ?, image = ? WHERE id = ?');
         $stmt->bind_param('ssisi', $title_q, $content_q, $category_id_q, $img_q, $post_id_q);
     }
@@ -59,7 +60,7 @@ if (isset($_POST['submit'])) {
     $content_q = $content;
     $category_id_q = $category_id;
     $post_id_q = $post_id;
-    $img_q = $img['name'];
+    $img_q = $img_name_db;
     // eseguo lo statement
     $stmt->execute();
     // chiudo lo statement e la connesione al db
