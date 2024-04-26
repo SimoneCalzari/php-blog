@@ -9,7 +9,7 @@ if (!isset($_SESSION['user'])) {
 $user = $_SESSION['user'];
 // mi connetto al db per prendere le categorie e mostrarle come opzione nel form
 require_once __DIR__ . '/../utilities/db_conn.php';
-$result = $conn->query('SELECT * FROM categories');
+$result = $conn->query('SELECT * FROM categories ORDER BY name ASC');
 $categories = $result->fetch_all(MYSQLI_ASSOC);
 // entriamo nel caso che il form sia stato inviato
 if (isset($_POST['submit'])) {

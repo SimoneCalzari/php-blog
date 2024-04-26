@@ -6,17 +6,25 @@
         <!-- /TITOLO -->
         <!-- MENU -->
         <nav class="d-flex align-items-center">
-            <!-- TORNA ALLA HOME -->
+            <!-- TORNA ALLA HOME O LOGIN -->
             <?php if ($_SERVER['PHP_SELF'] === '/Post_Boolean/php-blog/login.php') : ?>
+                <a href="register.php" class="btn btn-info me-3">Register</a>
                 <a href="index.php" class="btn btn-success">Home <i class="fa-solid fa-house ms-1"></i></a>
             <?php endif; ?>
-            <!-- /TORNA ALLA HOME -->
-            <!-- VAI AL LOGIN -->
+            <!-- /TORNA ALLA HOME O LOGIN -->
+            <!-- TORNA ALLA HOME O REGISTER -->
+            <?php if ($_SERVER['PHP_SELF'] === '/Post_Boolean/php-blog/register.php') : ?>
+                <a href="login.php" class="btn btn-info me-3">Login</a>
+                <a href="index.php" class="btn btn-success">Home <i class="fa-solid fa-house ms-1"></i></a>
+            <?php endif; ?>
+            <!-- /TORNA ALLA HOME O REGISTER -->
+            <!-- VAI AL LOGIN O AL REGISTER-->
             <?php if ($_SERVER['PHP_SELF'] === '/Post_Boolean/php-blog/index.php' && !$user) : ?>
+                <a href="register.php" class="btn btn-info me-3">Register</a>
                 <a href="login.php" class="btn btn-info me-3">Login</a>
             <?php endif; ?>
-            <!-- /VAI AL LOGIN -->
-            <!-- USER -->
+            <!-- /VAI AL LOGIN O AL REGISTER -->
+            <!-- USER LOGGATO -->
             <?php if ($user) : ?>
                 <div class="fw-bold h-100 d-flex align-items-center px-2 position-relative fs-5 btn btn-primary text-black" id="user">
                     <?php echo $user['username'] ?> <i class="fa-solid fa-user ms-2"></i>
@@ -36,7 +44,7 @@
                     <!-- /MENU USER -->
                 </div>
             <?php endif; ?>
-            <!-- USER -->
+            <!-- USER LOGGATO -->
         </nav>
         <!-- /MENU -->
     </div>

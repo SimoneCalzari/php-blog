@@ -10,7 +10,7 @@ $user = $_SESSION['user'];
 // connessione al db
 require_once __DIR__ . '/../utilities/db_conn.php';
 // query categorie
-$result = $conn->query('SELECT * FROM categories');
+$result = $conn->query('SELECT * FROM categories ORDER BY name ASC');
 $categories = $result->fetch_all(MYSQLI_ASSOC);
 // creo un array con solo gli id delle categorie
 $cat_ids = array_map(function ($cat) {

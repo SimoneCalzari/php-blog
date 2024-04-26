@@ -29,7 +29,7 @@ if ($result->num_rows === 0) {
 // se ho un risultato procedo a salvarmi il post in una variabile, cosi da poter mostrare i valori attuali che poi l utente potrà aggiornare
 $post = $result->fetch_assoc();
 // prendo tutte le categorie da mostrare nella select
-$result = $conn->query('SELECT * FROM categories');
+$result = $conn->query('SELECT * FROM categories ORDER BY name ASC');
 $categories = $result->fetch_all(MYSQLI_ASSOC);
 // se l'utente ha aggiornato i dati partiamo a salvare le eventuali modifiche
 if (isset($_POST['submit'])) {
