@@ -13,7 +13,7 @@
             <!-- /TORNA ALLA HOME -->
             <!-- VAI AL LOGIN -->
             <?php if ($_SERVER['PHP_SELF'] === '/Post_Boolean/php-blog/index.php' && !$user) : ?>
-                <a href="login.php" class="btn btn-info ms-2">Login</a>
+                <a href="login.php" class="btn btn-info me-3">Login</a>
             <?php endif; ?>
             <!-- /VAI AL LOGIN -->
             <!-- USER -->

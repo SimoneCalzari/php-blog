@@ -57,6 +57,7 @@ if (in_array($curr_category, $cat_ids)) {
     <?php require_once __DIR__ . '/../partials/post_header.php' ?>
     <main class="flex-grow-1 overflow-auto h-25">
         <div class="container-fluid row py-2">
+            <!-- RICERCA PER CATEGORIA -->
             <div class="col-2">
                 <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="GET">
                     <label for="category" class="fs-5 mb-1 py-2">Filter by category:</label>
@@ -71,6 +72,8 @@ if (in_array($curr_category, $cat_ids)) {
                     <button class="btn btn-info">Search <i class="fa-solid fa-magnifying-glass"></i></button>
                 </form>
             </div>
+            <!-- /RICERCA PER CATEGORIA -->
+            <!-- LISTA POST UTENTE -->
             <div class="col-8">
                 <!-- INDICAZIONE NUMERO POST O LORO ASSENZA -->
                 <?php if (count($posts)) : ?>
@@ -153,6 +156,8 @@ if (in_array($curr_category, $cat_ids)) {
                 </ul>
                 <!-- /POSTS -->
             </div>
+            <!-- /LISTA POST UTENTE -->
+            <!-- CREA CATEGORIA -->
             <div class="col-2">
                 <p class="fs-5 mb-1 py-2">Add a new category: </p>
                 <form action="../category/store.php" method="POST">
@@ -162,6 +167,7 @@ if (in_array($curr_category, $cat_ids)) {
                     </div>
                 </form>
             </div>
+            <!-- /CREA CATEGORIA -->
         </div>
     </main>
     <!-- JS BOOTSTRAP -->
