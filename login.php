@@ -8,7 +8,7 @@ if ($user) {
 }
 // controllo se sono stati inviati user e password
 if (isset($_POST['user']) && isset($_POST['psw'])) {
-    $user = htmlspecialchars($_POST['user']);
+    $user_name = htmlspecialchars($_POST['user']);
     $psw = htmlspecialchars($_POST['psw']);
     // connessione al db
     require_once __DIR__ . '/utilities/db_conn.php';
@@ -16,7 +16,7 @@ if (isset($_POST['user']) && isset($_POST['psw'])) {
     // prep and bind per prendere l'eventuale utente
     $stmt = $conn->prepare('SELECT * FROM users WHERE username = ?');
     $stmt->bind_param('s', $username);
-    $username = $user;
+    $username = $user_name;
     // eseguo lo statement
     $stmt->execute();
     // prendo i risultati 
@@ -58,14 +58,14 @@ if (isset($_POST['user']) && isset($_POST['psw'])) {
         <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST" class="m-auto border border-2 border-primary p-4 rounded-4 bg-white">
             <div class="mb-3">
                 <label for="user" class="form-label fw-bold">Username</label>
-                <input type="text" class="form-control" id="user" name="user" required value="<?php echo $user ?? '' ?>">
+                <input type="text" class="form-control" id="user" name="user" required value="<?php echo $user_name ?? '' ?>">
             </div>
             <div class="mb-4">
                 <label for="psw" class="form-label fw-bold">Password</label>
                 <input type="password" class="form-control" id="psw" name="psw" required value="<?php echo $psw ?? '' ?>">
             </div>
             <?php if ($error_msg ?? false) : ?>
-                <p class="text-danger mb-4">User or password not found</p>
+                <p class="text-danger mb-4">User or password not valid</p>
             <?php endif; ?>
             <button class="btn btn-primary mx-auto d-block px-4">Login</button>
         </form>

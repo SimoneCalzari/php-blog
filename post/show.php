@@ -65,6 +65,9 @@ $conn->close();
             </div>
         </div>
     </main>
+    <!-- JS MENU -->
+    <script src="../js/menu.js"></script>
+    <!-- /JS MENU -->
 </body>
 
 </html>

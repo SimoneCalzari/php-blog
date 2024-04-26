@@ -50,12 +50,17 @@ if (in_array($curr_category, $cat_ids)) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php require_once __DIR__ . '/../partials/boos_font.php' ?>
+    <link rel="stylesheet" href="../css/style.css">
     <title>Post Dasboard</title>
 </head>
 
 <body class="vh-100 d-flex flex-column">
+    <!-- BACK TO TOP BUTTON -->
+    <div id="back-to-top" class="bg-primary">
+        <i class="fa-solid fa-arrow-up"></i>
+    </div>
     <?php require_once __DIR__ . '/../partials/post_header.php' ?>
-    <main class="flex-grow-1 overflow-auto h-25">
+    <main class="flex-grow-1 overflow-auto h-25" id="back-to-top-target">
         <div class="container-fluid row py-2">
             <!-- RICERCA PER CATEGORIA -->
             <div class="col-2">
@@ -150,7 +155,6 @@ if (in_array($curr_category, $cat_ids)) {
                                 </a>
                                 <!-- /DETTAGLIO POST -->
                             </div>
-
                         </li>
                     <?php endforeach; ?>
                 </ul>
@@ -176,6 +180,9 @@ if (in_array($curr_category, $cat_ids)) {
     <!-- JS MENU -->
     <script src="../js/menu.js"></script>
     <!-- /JS MENU -->
+    <!-- JS BACK TO TOP -->
+    <script src="../js/backToTop.js"></script>
+    <!-- /JS BACK TO TOP -->
 </body>
 
 </html>

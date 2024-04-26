@@ -33,10 +33,16 @@ if (in_array($curr_category, $cat_ids)) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php require_once __DIR__ . '/partials/boos_font.php' ?>
+    <link rel="stylesheet" href="css/style.css">
     <title>PHP MY BLOG</title>
 </head>
 
 <body class="vh-100 d-flex flex-column">
+    <!-- BACK TO TOP BUTTON -->
+    <div id="back-to-top" class="bg-primary">
+        <i class="fa-solid fa-arrow-up"></i>
+    </div>
+    <!-- /BACK TO TOP BUTTON -->
     <?php require_once __DIR__ . '/partials/public_header.php' ?>
     <main class="flex-grow-1 h-25">
         <div class="container-fluid h-100">
@@ -58,7 +64,7 @@ if (in_array($curr_category, $cat_ids)) {
                 </div>
                 <!-- /RICERCA PER CATEGORIA -->
                 <!-- POSTS -->
-                <div class="col-10 pt-3 h-100 overflow-auto">
+                <div class="col-10 pt-3 h-100 overflow-auto" id="back-to-top-target">
                     <?php if ($curr_category) : ?>
                         <p class="text-center fw-bold fs-4">Your research has produced <?php echo count($posts) ? count($posts) : 'no' ?> results</p>
                     <?php else : ?>
@@ -69,7 +75,7 @@ if (in_array($curr_category, $cat_ids)) {
                             <?php foreach ($posts as $post) : ?>
                                 <!-- POST -->
                                 <div class="col-6 px-4 mb-5">
-                                    <div class="bg-body-secondary  px-4 pb-4 rounded-5">
+                                    <div class="bg-body-secondary  px-4 pb-4 rounded-5 h-100">
                                         <header class="d-flex justify-content-between align-items-center">
                                             <h3 class="text-center py-3">
                                                 <?php echo strtoupper($post['title']) ?> by <?php echo $post['username'] ?>
@@ -93,12 +99,14 @@ if (in_array($curr_category, $cat_ids)) {
                 </div>
                 <!-- /POSTS -->
             </div>
-
         </div>
     </main>
     <!-- JS MENU -->
     <script src="js/menu.js"></script>
     <!-- /JS MENU -->
+    <!-- JS BACK TO TOP -->
+    <script src="js/backToTop.js"></script>
+    <!-- /JS BACK TO TOP -->
 </body>
 
 </html>

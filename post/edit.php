@@ -153,6 +153,9 @@ if (isset($_POST['submit'])) {
             </form>
         </div>
     </main>
+    <!-- JS MENU -->
+    <script src="../js/menu.js"></script>
+    <!-- /JS MENU -->
     <!-- JS PREVIEW IMMAGINE CARICARE -->
     <script src="../js/previews.js"></script>
     <!-- /JS PREVIEW IMMAGINE CARICARE -->
