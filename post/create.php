@@ -2,7 +2,7 @@
 session_start();
 // se l'utente non loggato digita questa pagina nell url viene rimandato al login
 if (!isset($_SESSION['user'])) {
-    header("Location: ../login.php");
+    header("Location: ../index.php");
     die();
 }
 // salvo l user in una variabile

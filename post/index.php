@@ -2,7 +2,7 @@
 session_start();
 // se l'utente non loggato digita questa pagina nell url viene rimandato al login
 if (!isset($_SESSION['user'])) {
-    header("Location: ../login.php");
+    header("Location: ../index.php");
     die();
 }
 // salvo l user  in una variabile
@@ -167,6 +167,9 @@ if (in_array($curr_category, $cat_ids)) {
     <!-- JS BOOTSTRAP -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- /JS BOOTSTRAP -->
+    <!-- JS MENU -->
+    <script src="../js/menu.js"></script>
+    <!-- /JS MENU -->
 </body>
 
 </html>

@@ -1,7 +1,8 @@
 <?php
 session_start();
+$user = $_SESSION['user'] ?? null;
 // se l'utente è già loggato lo rimando alla dashboard di gestione dei post
-if (isset($_SESSION['user'])) {
+if ($user) {
     header("Location: ./post/index.php");
     die();
 }
@@ -52,9 +53,7 @@ if (isset($_POST['user']) && isset($_POST['psw'])) {
 </head>
 
 <body class="vh-100 d-flex flex-column">
-    <header class="bg-primary text-center py-2">
-        <h1>PHP MY BLOG - LOGIN</h1>
-    </header>
+    <?php require_once __DIR__ . '/partials/public_header.php' ?>
     <main class="flex-grow-1 d-flex bg-body-secondary">
         <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST" class="m-auto border border-2 border-primary p-4 rounded-4 bg-white">
             <div class="mb-3">
