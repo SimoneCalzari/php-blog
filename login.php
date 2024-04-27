@@ -57,7 +57,7 @@ if (isset($_POST['user']) && isset($_POST['psw'])) {
     <main class="flex-grow-1 d-flex bg-body-secondary">
         <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST" class="m-auto border border-2 border-primary p-4 rounded-4 bg-white">
             <h4 class="text-primary mb-3">Log into your account!</h4>
-            <div class="mb-3">
+            <div class="mb-2">
                 <label for="user" class="form-label fw-bold">Username</label>
                 <input type="text" class="form-control" id="user" name="user" required value="<?php echo $user_name ?? '' ?>">
             </div>
@@ -66,7 +66,7 @@ if (isset($_POST['user']) && isset($_POST['psw'])) {
                 <input type="password" class="form-control" id="psw" name="psw" required value="<?php echo $psw ?? '' ?>">
             </div>
             <?php if ($error_msg ?? false) : ?>
-                <p class="text-danger mb-1">User or password not valid</p>
+                <p style="font-size: 14px;" class="text-danger fw-bold mb-1">User or password not valid</p>
             <?php endif; ?>
             <p class="mt-2">No account yet? <a href="register.php">Create one now!</a></p>
             <button class="btn btn-primary mx-auto d-block px-4">Login</button>

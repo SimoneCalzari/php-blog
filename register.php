@@ -6,41 +6,112 @@ if ($user) {
     header("Location: ./post/index.php");
     die();
 }
-// controllo se sono stati inviati user e password
-// if (isset($_POST['user']) && isset($_POST['psw'])) {
-//     $user_name = htmlspecialchars($_POST['user']);
-//     $psw = htmlspecialchars($_POST['psw']);
-//     // connessione al db
-//     require_once __DIR__ . '/utilities/db_conn.php';
 
-//     // prep and bind per prendere l'eventuale utente
-//     $stmt = $conn->prepare('SELECT * FROM users WHERE username = ?');
-//     $stmt->bind_param('s', $username);
-//     $username = $user_name;
-//     // eseguo lo statement
-//     $stmt->execute();
-//     // prendo i risultati 
-//     $result = $stmt->get_result();
-//     // caso utente esiste
-//     if ($result->num_rows > 0) {
-//         // salvo la row dell'utente come un array associativo
-//         $user_db = $result->fetch_assoc();
-//         $stmt->close();
+function handlingUser($string)
+{
+    // array dove salverò eventuali messaggi d'errore
+    $errorMessages = [];
+    // controllo che l'input sia almeno 5 caratteri
+    if (strlen($string) < 5) {
+        // pusho primo messaggio d errore
+        array_push($errorMessages, "Your username should be 5 characters minimum");
+    }
+    // controllo che l'input non contenga caratteri speciali
+    if (!ctype_alnum($string)) {
+        // pusho secondo messaggio d errore
+        array_push($errorMessages, "Your username should contain only letters or numbers");
+    }
+    // controllo se questo username è già presente nel db
+    // connessione al db
+    require __DIR__ . '/utilities/db_conn.php';
+    // prep and bind per prendere l'eventuale utente
+    $stmt = $conn->prepare('SELECT * FROM users WHERE username = ?');
+    $stmt->bind_param('s', $username);
+    $username = $string;
+    // eseguo lo statement
+    $stmt->execute();
+    // controllo se esiste l username
+    $result = $stmt->get_result();
+    if ($result->num_rows  > 0) {
+        // esiste già questo username, restituisco messaggio d errore
+        array_push($errorMessages, "Your username already exists, pick another one");
+    }
+    $stmt->close();
+    $conn->close();
+    // se l'user supera i test avrò array vuoto !!!
+    return $errorMessages;
+}
 
-//         if (password_verify($psw, $user_db['password'])) {
-//             // salvo l utente in sessione
-//             $_SESSION['user'] = $user_db;
-//             // salvo il suo numero di post per avere un riferimento nel caso ne aggiunga o tolta altri
-//             $result = $conn->query('SELECT * FROM posts WHERE user_id = ' . $user_db['id']);
-//             $_SESSION['posts_num'] = $result->num_rows;
-//             $conn->close();
-//             header("Location: ./post/index.php");
-//             die();
-//         }
-//     }
-//     // caso utente non esiste o password sbagliata, mostro messaggio d'errore
-//     $error_msg = true;
-// }
+function handlingPassword($string)
+{
+    // array dove salverò eventuali messaggi d'errore
+    $errorMessages = [];
+    // controllo che l'input sia almeno 6 caratteri
+    if (strlen($string) < 6) {
+        // pusho primo messaggio d errore
+        array_push($errorMessages, "Your password should be 6 characters minimum");
+    }
+    // controllo che l'input non contenga caratteri speciali
+    if (!ctype_alnum($string)) {
+        // pusho secondo messaggio d errore
+        array_push($errorMessages, "Your password should contain only letters or numbers");
+    }
+    // se la password supera i test avrò array vuoto !!!
+    return $errorMessages;
+}
+
+function registeredYesNo($username, $password)
+{
+    $errors = [];
+    // eventuali errori connessi all'username
+    $errorsUser = handlingUser($username);
+    array_push($errors, $errorsUser);
+    // eventuali errori connessi alla password
+    $errorsPassword = handlingPassword($password);
+    array_push($errors, $errorsPassword);
+    // controllo se ci son stati errori in generale
+    $anyErrors = false;
+    foreach ($errors as $error) {
+        if (count($error) > 0) {
+            $anyErrors = true;
+        }
+    }
+    // se non ho errori procedo alla registrazione
+    if (!$anyErrors) {
+        // connessione al db
+        require __DIR__ . '/utilities/db_conn.php';
+        // prep and bind per inserire l utente in tabella
+        $stmt = $conn->prepare('INSERT INTO users (username, password) VALUES (?, ?)');
+        $stmt->bind_param('ss', $user_name, $psw);
+        // hasho password
+        $psw = password_hash($password, PASSWORD_DEFAULT);
+        $user_name = $username;
+        // eseguo lo statement
+        $stmt->execute();
+        $stmt->close();
+        // prendo l user appena registrato dal db per salvarlo in sessione
+        $user = $conn->query("SELECT * FROM users WHERE username = '$username'")->fetch_assoc();
+        $_SESSION['user'] = $user;
+        // setto il numero di post in sessione a zero per la questione messaggi di cancellazione o pubblicazione post
+        $_SESSION['posts_num'] = 0;
+        $conn->close();
+        header("Location: ./post/index.php");
+        die();
+    }
+    // altrimenti restituisco gli errori che poi stamperò in pagina
+    return $errors;
+}
+// nel caso siano stati inviati password e username
+if (isset($_POST['user']) && isset($_POST['psw'])) {
+    // salvo i dati in due variabili
+    $username = htmlspecialchars(trim($_POST['user']));
+    $psw = htmlspecialchars(trim($_POST['psw']));
+    // eseguo la funzione che gestice la registrazione
+    // se ho successo verrò rendirizzato all area personale, altrimenti avrò messaggi d errore
+    // questi messaggi li salvo in una variabile per stamparli in pagina per l utente
+    $errorsUser = registeredYesNo($username, $psw)[0];
+    $errorsPassword = registeredYesNo($username, $psw)[1];
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -57,18 +128,29 @@ if ($user) {
     <main class="flex-grow-1 d-flex bg-body-secondary">
         <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST" class="m-auto border border-2 border-primary p-4 rounded-4 bg-white">
             <h4 class="text-primary mb-3">Join our blog today!</h4>
-            <div class="mb-3">
+            <div class="mb-2">
                 <label for="user" class="form-label fw-bold">Choose your username:</label>
-                <input type="text" class="form-control" id="user" name="user" required value="<?php echo $user_name ?? '' ?>">
+                <input type="text" class="form-control" id="user" name="user" value="<?php echo $username ?? '' ?>" required>
             </div>
+            <?php if (isset($errorsUser)) : ?>
+                <ul class=" list-unstyled mb-1">
+                    <?php foreach ($errorsUser as $error) : ?>
+                        <li style="font-size: 14px;" class="text-danger fw-bold"><?php echo $error ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            <?php endif; ?>
             <div class="mb-1">
                 <label for="psw" class="form-label fw-bold">Choose your password</label>
-                <input type="password" class="form-control" id="psw" name="psw" required value="<?php echo $psw ?? '' ?>">
+                <input type="password" class="form-control" id="psw" name="psw" value="<?php echo $psw ?? '' ?>" required>
             </div>
-            <?php if ($error_msg ?? false) : ?>
-                <p class="text-danger mb-1">User or password not valid</p>
+            <?php if (isset($errorsPassword)) : ?>
+                <ul class=" list-unstyled mb-1">
+                    <?php foreach ($errorsPassword as $error) : ?>
+                        <li style="font-size: 14px;" class="text-danger fw-bold"><?php echo $error ?></li>
+                    <?php endforeach; ?>
+                </ul>
             <?php endif; ?>
-            <p class="mt-2">Already a member? <a href="login.php">Login in here!</a></p>
+            <p class=" mt-2">Already a member? <a href="login.php">Login in here!</a></p>
             <button class="btn btn-primary mx-auto d-block px-4">Register</button>
         </form>
     </main>
