@@ -57,21 +57,38 @@ if (isset($_POST['user']) && isset($_POST['psw'])) {
     <main class="flex-grow-1 d-flex bg-body-secondary">
         <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST" class="m-auto border border-2 border-primary p-4 rounded-4 bg-white">
             <h4 class="text-primary mb-3">Log into your account!</h4>
+            <!-- USERNAME -->
             <div class="mb-2">
                 <label for="user" class="form-label fw-bold">Username</label>
                 <input type="text" class="form-control" id="user" name="user" required value="<?php echo $user_name ?? '' ?>">
             </div>
+            <!-- /USERNAME -->
+            <!-- PASSWORD -->
             <div class="mb-1">
                 <label for="psw" class="form-label fw-bold">Password</label>
-                <input type="password" class="form-control" id="psw" name="psw" required value="<?php echo $psw ?? '' ?>">
+                <div class="position-relative">
+                    <input type="password" class="form-control" id="psw" name="psw" required value="<?php echo $psw ?? '' ?>">
+                    <!-- MOSTRA E NASCONDI PSW -->
+                    <i class="fa-solid fa-eye-slash text-primary position-absolute fs-5" style="top: 30%; right: 5%;" role="button"></i>
+                    <i class="fa-solid fa-eye text-primary position-absolute fs-5 d-none" style="top: 30%; right: 5%;" role="button"></i>
+                    <!-- /MOSTRA E NASCONDI PSW -->
+                </div>
             </div>
+            <!-- /PASSWORD -->
+            <!-- MESSAGGI D ERRORE -->
             <?php if ($error_msg ?? false) : ?>
                 <p style="font-size: 14px;" class="text-danger fw-bold mb-1">User or password not valid</p>
             <?php endif; ?>
+            <!-- /MESSAGGI D ERRORE -->
+            <!-- BUTTON E VAI ALLA REGISTRAZIONE -->
             <p class="mt-2">No account yet? <a href="register.php">Create one now!</a></p>
             <button class="btn btn-primary mx-auto d-block px-4">Login</button>
+            <!-- /BUTTON E VAI ALLA REGISTRAZIONE -->
         </form>
     </main>
+    <!-- OCCHIOLINO MOSTRA E NASCONID PSW -->
+    <script src="js/seePassword.js"></script>
+    <!-- /OCCHIOLINO MOSTRA E NASCONID PSW -->
 </body>
 
 </html>

@@ -128,10 +128,13 @@ if (isset($_POST['user']) && isset($_POST['psw'])) {
     <main class="flex-grow-1 d-flex bg-body-secondary">
         <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST" class="m-auto border border-2 border-primary p-4 rounded-4 bg-white">
             <h4 class="text-primary mb-3">Join our blog today!</h4>
+            <!-- USERNAME -->
             <div class="mb-2">
                 <label for="user" class="form-label fw-bold">Choose your username:</label>
                 <input type="text" class="form-control" id="user" name="user" value="<?php echo $username ?? '' ?>" required>
             </div>
+            <!-- /USERNAME -->
+            <!-- MESSAGGI D ERRORE -->
             <?php if (isset($errorsUser)) : ?>
                 <ul class=" list-unstyled mb-1">
                     <?php foreach ($errorsUser as $error) : ?>
@@ -139,10 +142,20 @@ if (isset($_POST['user']) && isset($_POST['psw'])) {
                     <?php endforeach; ?>
                 </ul>
             <?php endif; ?>
+            <!-- /MESSAGGI D ERRORE -->
+            <!-- PASSWORD -->
             <div class="mb-1">
                 <label for="psw" class="form-label fw-bold">Choose your password</label>
-                <input type="password" class="form-control" id="psw" name="psw" value="<?php echo $psw ?? '' ?>" required>
+                <div class="position-relative">
+                    <input type="password" class="form-control" id="psw" name="psw" value="<?php echo $psw ?? '' ?>" required>
+                    <!-- MOSTRA E NASCONDI PSW -->
+                    <i class="fa-solid fa-eye-slash text-primary position-absolute fs-5" style="top: 30%; right: 5%;" role="button"></i>
+                    <i class="fa-solid fa-eye text-primary position-absolute fs-5 d-none" style="top: 30%; right: 5%;" role="button"></i>
+                    <!-- /MOSTRA E NASCONDI PSW -->
+                </div>
             </div>
+            <!-- /PASSWORD -->
+            <!-- MESSAGGI D ERRORE -->
             <?php if (isset($errorsPassword)) : ?>
                 <ul class=" list-unstyled mb-1">
                     <?php foreach ($errorsPassword as $error) : ?>
@@ -150,10 +163,16 @@ if (isset($_POST['user']) && isset($_POST['psw'])) {
                     <?php endforeach; ?>
                 </ul>
             <?php endif; ?>
+            <!-- /MESSAGGI D ERRORE -->
+            <!-- BUTTON E VAI AL LOGIN -->
             <p class=" mt-2">Already a member? <a href="login.php">Login in here!</a></p>
             <button class="btn btn-primary mx-auto d-block px-4">Register</button>
+            <!-- /BUTTON E VAI AL LOGIN -->
         </form>
     </main>
+    <!-- OCCHIOLINO MOSTRA E NASCONID PSW -->
+    <script src="js/seePassword.js"></script>
+    <!-- /OCCHIOLINO MOSTRA E NASCONID PSW -->
 </body>
 
 </html>
