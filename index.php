@@ -77,7 +77,7 @@ if (in_array($curr_category, $cat_ids)) {
                                 <div class="col-6 px-4 mb-5">
                                     <div class="bg-body-secondary  px-4 pb-4 rounded-5 h-100">
                                         <header class="d-flex justify-content-between align-items-center">
-                                            <h3 class="text-center py-3">
+                                            <h3 class="text-center py-3 fs-4">
                                                 <?php echo strtoupper($post['title']) ?> by <?php echo $post['username'] ?>
                                             </h3>
                                             <span class="bg-info fs-6 fw-bold px-2 rounded">
@@ -85,7 +85,9 @@ if (in_array($curr_category, $cat_ids)) {
                                             </span>
                                         </header>
                                         <?php if ($post['image']) : ?>
-                                            <img src="uploads/<?php echo $post['image'] ?>" alt="<?php echo $post['title'] ?>" class="w-50 mx-auto d-block mb-2">
+                                            <div class="w-50 mx-auto mb-2 overflow-hidden" style="aspect-ratio: 1/1;">
+                                                <img src="uploads/<?php echo $post['image'] ?>" alt="<?php echo $post['title'] ?>" class="object-fit-cover w-100 h-100">
+                                            </div>
                                         <?php endif; ?>
                                         <p class="mt-3 mb-2"><?php echo $post['content'] ?></p>
                                         <p><span class="fw-bold fs-6">Last update: </span><?php echo $post['updated_at'] ?></p>

@@ -55,7 +55,9 @@ $conn->close();
                 </a>
             </header>
             <?php if ($post['image']) : ?>
-                <img src="../uploads/<?php echo $post['image'] ?>" alt="<?php echo $post['title'] ?>" class="w-50 mx-auto d-block mb-2">
+                <div class="w-50 mx-auto mb-2" style="aspect-ratio: 1/1;">
+                    <img src="../uploads/<?php echo $post['image'] ?>" alt="<?php echo $post['title'] ?>" class="w-100 h-100 object-fit-cover">
+                </div>
             <?php endif; ?>
             <h5>Content</h5>
             <p><?php echo $post['content'] ?></p>
